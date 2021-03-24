@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css" th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Ecole"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text="${ecole.getNom_ecole()}"/>
+				<p class="app-sidebar__user-designation">Ecole</p>
+			</div>
+		</div>
+			<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Ecole"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+			<!-- <li><a class="app-menu__item" href="/Liste-Etudiant"><i
+					class="app-menu__icon fa fa fa-list"></i><span
+					class="app-menu__label">Liste Etudiant</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Etudiant-Sans-Stage"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Etudiant sans stage</span></a></li>
+			<li><a class="app-menu__item" href="/Compte_Etudiant"><i
+					class="app-menu__icon fa fa-lock"></i><span class="app-menu__label">Compte
+						Etudiant</span></a></li> -->
+						
+						
+						
+		<li class="treeview"><a class="app-menu__item" href="Reservation_Client" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Etudiant</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="/Liste-Etudiant"><i class="icon fa fa-circle-o"></i>Lister</a></li>
+            <li><a class="treeview-item" href="/Liste-Etudiant-Sans-Stage" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>Non stagiaire</a></li>
+            <li><a class="treeview-item" href="/Compte_Etudiant"><i class="icon fa fa-circle-o"></i>Créer Compte</a></li>
+          </ul>
+        </li>
+			<li><a class="app-menu__item" href="/Liste_Convention_Etudiant"><i
+					class="app-menu__icon fa fa-pencil-square-o"></i><span class="app-menu__label">Demande Convention</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entreprise</span></a></li>
+					
+						<li><a class="app-menu__item" href="/Liste-Filiere"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Filière</span></a></li>
+		</ul>
+	</aside>
+	<main class="app-content">
+		<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header" style="margin: 12px 0 20px;">
+				<i class="fa fa-line-chart" aria-hidden="true"></i> Statistique
+			</h3>
+			<nav aria-label="breadcrumb" style="background-color: white;">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item active" aria-current="page"><i
+						class="fa fa-line-chart" aria-hidden="true"></i> Statistique</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small primary coloured-icon">
+					<i class="icon fa fa-users fa-3x"></i>
+					<div class="info">
+						<h4>Nombre Etudiants</h4>
+						<p>
+							<b th:text="${CountEtd}"></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small info coloured-icon">
+					<i class="icon fa fa-users fa-3x"></i>
+					<div class="info">
+						<h4>Etudiant Stagaires</h4>
+						<p>
+							<b th:text="${CountEtdStage}"></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small warning coloured-icon">
+					<i class="icon fa fa-university fa-3x"></i>
+					<div class="info">
+						<h4>Nombre Entreprise</h4>
+						<p>
+							<b th:text="${CountEntreprise}"></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small danger coloured-icon">
+					<i class="icon fa fa-users fa-3x"></i>
+					<div class="info">
+						<h4>Etudiants Sans stage</h4>
+						<p>
+							<b th:text="${CountEtudiantSansStage}"></b>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<h3 class="tile-title">Total Etudiants</h3>
+					<div class="embed-responsive">
+						<div id="piechart" style="width: 900px; height: 250px;"></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</main>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script th:inline="javascript" >
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Etudiants stagiaire',     /*[[${CountEtdStage}]]*/],
+          ['Etudiants sans stage',     /*[[${CountEtudiantSansStage}]]*/],
+        ]);
+
+        var options = {
+          title: 'Pourcentage étudiants',
+          colors: [ '#17a2b8','#dc3545'],
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+	<!-- Essential javascripts for application to work-->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="/js/main.js"></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="js/plugins/pace.min.js"></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="../static/js/plugins/chart.js"></script>
+
+</body>
+</html>

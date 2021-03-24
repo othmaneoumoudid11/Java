@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css" th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Entreprise"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg}
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text = ${entreprise.getNom_entr()}>
+				<p class="app-sidebar__user-designation">Entreprise</p>
+			</div>
+		</div>
+	<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Entreprise"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste_Offre"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Créer Offre</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Compte_Interne"><i
+					class="app-menu__icon fa fa-user"></i>
+					<span class="app-menu__label">Liste Compte interne</span></a></li>	
+					<li><a class="app-menu__item" href="/Liste_Stagiaire"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Stagiaire</span></a></li>
+					
+				<li><a class="app-menu__item" href="/Liste_Entretien_Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entretien</span></a></li>
+	</ul>
+	</aside>
+	<main class="app-content">
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-users" aria-hidden="true"></i> Liste des étudiants
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/Acceuil_Entreprise"><i class="fa fa-line-chart"></i>  Statistique</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa-users" aria-hidden="true"></i> Liste des étudiants</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		
+
+		<div class="row">
+			<br>
+			<div class="col-md-12">
+				<div class="tile">
+					</br>
+					<div class="tile-body">
+						<div class="table-responsive">
+
+							<table class="table table-hover table-bordered" id="sampleTable">
+								<thead>
+									<tr>
+
+										<th>Nom</th>
+										<th>Prénom</th>
+										<th>Email</th>
+										<th>Numéro de téléphone</th>
+										<th>Filière</th>
+										<th>Domaine</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr th:each="E:${etudiants}">
+
+										<td th:text="${E.getNom_etd()}"/>
+										<td th:text="${E.getPrenom_etd()}"/>
+										<td th:text="${E.getMail_etd()}"/>
+										<td th:text="${E.getTele_etd()}"/>
+										<td th:text="${E.getFiliere().getFiliere()}"/>
+										<td th:text="${E.getDom_etd()}"/>
+										<td>
+										
+											<li class="list-inline-item">
+											<form action="CVEtudiant" method="POST">
+											
+											<input type="hidden" name="id_etd" th:value="${E.getId_etd()}"/>
+												<button class="btn btn-success" type="submit">
+													<i class="fa fa-file-text icon_" aria-hidden="true"></i>CV
+												</button>
+											</form>
+										</li>
+										
+											<li class="list-inline-item">
+											<form action="LettreEtudiant" method="POST">
+											 <input type="hidden" name="id_etd" th:value="${E.getId_etd()}"/>
+											  <input type="hidden" name="id_off" th:value="${id_off}"/>
+												<button class="btn btn-danger">
+													<i class="fa fa-file-text icon_" aria-hidden="true"></i>Lettre 
+												</button>
+											</form>
+                                           </li>
+                                           
+                                           
+                                           
+                  
+                                           <li class="list-inline-item">
+
+												<button class="btn btn-danger" data-toggle="modal"
+													data-target="#editmodel"
+													th:data-id-etd="${E.getId_etd()}"
+													th:data-id-off="${id_off}"
+													type="button"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-check-circle icon_" aria-hidden="true"></i>Appel 
+											</button>
+								
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+
+
+
+   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+		tabindex="-1" id="editmodel" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Appel Entretien</h5>
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" action="/Appel_Candidat" method="POST" name="myForm">
+						<input type="hidden" id="id_off" name="id_off" />
+						<input type="hidden" id="id_etd" name="id_etd" />
+						<div class="form-group">
+						<label>Saisir la date d'entretien</label>
+							<input type="datetime-local"
+							 class="form-control" name="date" required>
+						</div>
+						<div class="modal-footer">
+								<button type="submit" class="btn btn-secondary"
+									data-dismiss="modal">Annuler</button>
+								<button type="submit" class="btn btn-success ">Enregistrer</button>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	<!-- Essential javascripts for application to work-->
+	<script src="..static/js/jquery-3.3.1.min.js"
+		th:src=@{js/jquery-3.3.1.min.js}></script>
+	<script src="..static/js/popper.min.js" th:src=@{js/popper.min.js}></script>
+	<script src="..static/js/bootstrap.min.js"
+		th:src=@{js/bootstrap.min.js}></script>
+	<script src="..static/js/main.js" th:src=@{js/main.js}></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="..static/js/plugins/pace.min.js"
+		th:src=@{js/plugins/pace.min.js}></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="..static/js/plugins/chart.js"
+		th:src=@{js/plugins/chart.js}></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/French.json"></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/jquery.dataTables.min.js"
+		th:src=@{js/plugins/jquery.dataTables.min.js}></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/dataTables.bootstrap.min.js"
+		th:src=@{js/plugins/dataTables.bootstrap.min.js}></script>
+
+	<script type="text/javascript">
+		$('#sampleTable')
+				.DataTable(
+						{
+							"language" : {
+								"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+							},
+							columnDefs : [ {
+								targets : [ 6 ],
+								orderable : false
+							}, ]
+
+						});
+
+		$('#editmodel').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var id_off = button.data('id-off')
+			var id_etd = button.data('id-etd')
+			var modal = $(this)
+			modal.find('.modal-body #id_off').val(id_off);
+			modal.find('.modal-body #id_etd').val(id_etd);
+		})
+		
+	
+	</script>
+
+
+</body>
+</html>

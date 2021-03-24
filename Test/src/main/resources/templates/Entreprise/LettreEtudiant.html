@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css" th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Entreprise"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+	<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text = ${entreprise.getNom_entr()}>
+				<p class="app-sidebar__user-designation">Entreprise</p>
+			</div>
+		</div>
+	<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Entreprise"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste_Offre"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Créer Offre</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Compte_Interne"><i
+					class="app-menu__icon fa fa-user"></i>
+					<span class="app-menu__label">Liste Compte interne</span></a></li>	
+					<li><a class="app-menu__item" href="/Liste_Stagiaire"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Stagiaire</span></a></li>
+					
+				<li><a class="app-menu__item" href="/Liste_Entretien_Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entretien</span></a></li>
+	</ul>
+	</aside>
+   <main class="app-content">
+      <div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header" style="margin: 12px 0 20px;">
+				<i class="fa fa-file-text" aria-hidden="true"></i> Lettre de motivation
+			</h3>
+			<nav aria-label="breadcrumb" style="background-color: white;">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"> <a
+						href="/dashboard_Admin"> <i class="fa fa-home"></i>Acceuil</a></li>
+						<li class="breadcrumb-item "> <a href="#"> <i
+							class="fa fa-users"></i>Liste des étudiants</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><i
+						class="fa fa-file-text" aria-hidden="true"></i> Lettre de motivation</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+      
+      
+          <div class="tile">
+            <div class="mailbox-controls">
+             <h1>Lettre de motivation</h1>
+            </div>
+           	<div class="table-responsive mailbox-messages">
+						<table class="table">
+							<tbody >
+								<tr >
+									<td>
+										<div>
+											<p th:text="${L.getCont_let()}" ></p>
+										</div>
+									</td>
+							    </tr>
+							    
+							    
+							 
+							</tbody>
+						</table>
+					</div>
+          </div>
+
+    </main>
+    <!-- Essential javascripts for application to work-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <!-- Google analytics script-->
+   
+  </body>
+</html>
+
+
+
+
+
+
+ 

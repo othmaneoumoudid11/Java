@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css"
+	th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Etudiant"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name"  th:text="${Etudiant.getNom_etd()} +' '+ ${Etudiant.getPrenom_etd()}"/>
+				<p class="app-sidebar__user-designation">Etudiant</p>
+			</div>
+		</div>
+		<ul class="app-menu">
+			<li><a class="app-menu__item " href="Acceuil_Etudiant"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste-OffresEtudiant"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Liste Offres</span></a></li>
+			<li><a class="app-menu__item" href="/Curriculum_vitae"><i
+					class="app-menu__icon fa fa-file-text"></i><span
+					class="app-menu__label">Curriculum vitae</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Offre_Convention"><i
+					class="app-menu__icon fa fa-pencil-square-o"></i><span class="app-menu__label">Demande de convention</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Stage-Etudiant"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste de stages</span></a>
+					</li>
+			<li><a class="app-menu__item" href="/Liste_Entretien"><i
+					class="app-menu__icon fa fa-bell"></i><span
+					class="app-menu__label">Appel Entretiens</span></a>
+					</li>
+					
+					<li><a class="app-menu__item" href="/Liste_Convention_Accepter"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste conventiens</span></a>
+					</li>
+		 </ul>
+	</aside>
+	<main class="app-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-file-text" aria-hidden="true"></i> Convention
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/Acceuil_Etudiant"><i class="fa fa-line-chart"></i>  Statistique</a></li>
+						<li class="breadcrumb-item " aria-current="page">
+						<a href="Liste_Convention_Accepter"><i class="fa fa-list" aria-hidden="true"></i> Liste Conventions</a></li>
+							<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa-file-text" aria-hidden="true"></i> Lire Convention</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+
+		<div class="tile">
+			<div class="mailbox-controls">
+				<h1>Convention de stage</h1>
+			</div>
+			<div class="table-responsive mailbox-messages">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>
+								<div>
+
+									Au cours de sa formation, l’Elève Ingénieur de <b
+										th:text="${convention.getEcole().getNom_ecole()}"></b> est
+									appeléà effectuer chaque année un stage d’été d’une durée de un
+									mois auminimum pendant la période allant du début juillet au 31
+									Aout . La présente convention relative au stage de fin d’année
+									est conclue entre : <b
+										th:text="${convention.getEcole().getNom_ecole()}"></b>,
+									L’organisme d’accueil <b
+										th:text="${convention.getOffre().getEntreprise().getNom_entr()}"></b>,
+									Et l’élève ingénieur stagiaire <b
+										th:text="${convention.getEtudiant().getNom_etd()}"></b> <b
+										th:text="${convention.getEtudiant().getPrenom_etd()}"></b>
+									inscrit (e) a <b
+										th:text="${convention.getEcole().getNom_ecole()}"></b> </br>
+									Article 1 </br> La dure de stage est de : <b
+										th:text="${convention.getOffre().getDur_off()}"></b> </br> Article
+									2</br> L’élève ingénieur stagiaire <b
+										th:text="${convention.getEtudiant().getNom_etd()}"></b> <b
+										th:text="${convention.getEtudiant().getPrenom_etd()}"></b>
+									s’engage à effectuer son stage de fin d’année tel qu’il est
+									stipulé dans cette convention et ne peut prétendre à un
+									changement de son affectation initiale durant cette période
+									qu’après autorisation écrite de l'<b
+										th:text="${convention.getEcole().getNom_ecole()}"></b> </br>
+									L’organisme d’accueil est tenu d’avertir la direction de L’<b
+										th:text="${convention.getEcole().getNom_ecole()}"></b> dans
+									un délai d’une semaine si l’élève ingénieur stagiaire ne se
+									présente pas à son lieu d’affectation dans les délais prévus.
+
+								</div>
+								<hr style="border: 1px solid #007d71;">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</main>
+	<!-- Essential javascripts for application to work-->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="js/plugins/pace.min.js"></script>
+	<!-- Page specific javascripts-->
+	<!-- Google analytics script-->
+
+</body>
+</html>
+
+
+
+
+
+

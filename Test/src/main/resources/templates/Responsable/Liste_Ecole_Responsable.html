@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css"
+	th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	th:href=@{https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+</head>
+
+
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Responsable"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name"  th:text="${Responsable.getNom_res()} +' '+ ${Responsable.getPrenom_res()}"/>
+				<p class="app-sidebar__user-designation">Responsable</p>
+			</div>
+		</div>
+		<ul class="app-menu">
+			<li><a class="app-menu__item" href="/Acceuil_Responsable"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Ecole"><i
+					class="app-menu__icon fa fa fa-list"></i><span
+					class="app-menu__label">Liste Ecoles</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entreprises</span></a></li>
+		</ul>
+	</aside>
+
+	<main class="app-content">
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-list" aria-hidden="true"></i> Ecoles
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"> <a href="/Acceuil_Responsable"><i class="fa fa-line-chart"></i> Statistique</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa-list" aria-hidden="true"></i> Ecoles</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		<button type="button" id="new" class="btn btn-primary"
+			data-toggle="modal" data-target="#Add_Doctor"
+			style="margin-bottom: 10px;">
+			Ajouter Ecole <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+		</button>
+
+		<div class="row">
+			<br>
+			<div class="col-md-12">
+				<div class="tile">
+					</br>
+					<div class="tile-body">
+						<div class="table-responsive">
+
+							<table class="table table-hover table-bordered" id="sampleTable">
+								<thead>
+     								<tr>
+                                        <th>Nom</th>
+                                        <th>Adresse</th>
+                                        <th>Mail</th>
+                                        <th>Téléphone</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr th:each="E:${ecoles}">
+                                        <td th:text="${E.getNom_ecole()}" />
+                                        <td th:text="${E.getAddr_eco()}" />
+                                        <td th:text="${E.getMail_eco()}" />
+                                        <td th:text="${E.getTele_eco()}" />
+                                   
+									
+										<td>
+										<li class="list-inline-item" th:switch="${E.getCompte().isActive()}">
+												<button th:case="${true}" class="btn btn-success" data-toggle="modal"
+													data-target="#EtatCompteDesactiver"
+													th:data-edit_id="${E.getId_eco()}"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-lock" aria-hidden="true" style=" padding-bottom: 3px; "></i>Désactiver
+												</button>
+												
+												<button th:case="${false}" class="btn btn-success" data-toggle="modal"
+													data-target="#EtatCompteActive"
+													th:data-edit_id="${E.getId_eco()}"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-unlock" aria-hidden="true"  style=" padding-bottom: 3px;"></i>Activé
+												</button>
+												
+										</li>
+										
+											<li class="list-inline-item">
+												<button class="btn btn-danger" data-toggle="modal"
+													data-target="#deletemodel"
+													th:data-delete_id="${E.getId_eco()}"
+													type="button"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-trash" aria-hidden="true" style=" padding-bottom: 3px;"></i>Supprimer
+												</button>
+										   </li>
+										   
+										   
+										   <li class="list-inline-item">
+										 <form action="Statistique_Ecole" method="POST">
+											<input type="hidden" name="id_ecole" th:value="${E.getId_eco()}"/>
+											    <button class="btn btn-success" type="submit">
+													<i class="fa fa-line-chart icon_" aria-hidden="true"></i> Statistique
+												</button>
+										 </form>
+										 </li>
+										</td>
+									 </tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+		tabindex="-1" id="Add_Doctor" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ajouter une école</h5>
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" action="/Ajouter_Ecole" method="POST" name="myForm">
+						<div class="form-group">
+							<label>Nom Ecole</label> <input type="text" class="form-control"
+								name="nom" placeholder="Nom Ecole" required />
+						</div>
+						<div class="form-group">
+							<label>Adresse</label> <input type="text" class="form-control"
+								name="adresse" placeholder="adresse" required>
+						</div>
+						
+						<div class="form-group">
+							<label>Téléphone</label> <input type="text" class="form-control"
+								name="tele" placeholder="0678291725" required>
+						</div>
+						<div class="form-group">
+							<label>Mail</label> <input type="Email" class="form-control"
+								name="mail" placeholder="Ecole@mail.com"  required>
+						</div>
+						<div class="form-group">
+							<label>Mot de passe </label> <input type="password" class="form-control"
+								name="MDP" placeholder="**************"  required>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-secondary"
+								data-dismiss="modal">Annuler</button>
+							<button type="submit" class="btn btn-success ">Enregistrer</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="deletemodel" tabindex="-1" role="dialog"
+		aria-labelledby="delete" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="/Supprimer_Compte_Ecole" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Supprimer un compte </h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="delete_id" id="delete_id">Voulez-vous
+						supprimer le compte de cette école ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Non</button>
+						<button type="submit" class="btn btn-danger">Oui</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+
+	<div class="modal fade" id="EtatCompteDesactiver" tabindex="-1" role="dialog"
+		aria-labelledby="delete" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="/Desactiver_Compte_Ecole" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Désactiver un compte </h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="edit_id" id="edit_id">Voulez-vous
+						désactiver le compte de cette école ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Non</button>
+						<button type="submit" class="btn btn-danger">Oui</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+<div class="modal fade" id="EtatCompteActive" tabindex="-1" role="dialog"
+		aria-labelledby="delete" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="/Activer_Compte_Ecole" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Activé un compte </h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="edit_id" id="edit_id">Voulez-vous
+						activé le compte de cette école ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Non</button>
+						<button type="submit" class="btn btn-danger">Oui</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+
+	<!-- Essential javascripts for application to work-->
+	<script src="..static/js/jquery-3.3.1.min.js"
+		th:src=@{js/jquery-3.3.1.min.js}></script>
+	<script src="..static/js/popper.min.js" th:src=@{js/popper.min.js}></script>
+	<script src="..static/js/bootstrap.min.js"
+		th:src=@{js/bootstrap.min.js}></script>
+	<script src="..static/js/main.js" th:src=@{js/main.js}></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="..static/js/plugins/pace.min.js"
+		th:src=@{js/plugins/pace.min.js}></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="..static/js/plugins/chart.js"
+		th:src=@{js/plugins/chart.js}></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/French.json"></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/jquery.dataTables.min.js"
+		th:src=@{js/plugins/jquery.dataTables.min.js}></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/dataTables.bootstrap.min.js"
+		th:src=@{js/plugins/dataTables.bootstrap.min.js}></script>
+
+	<script type="text/javascript">
+		$('#sampleTable')
+				.DataTable(
+						{
+							"language" : {
+								"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+							},
+							
+
+						});
+
+		
+		
+		$('#EtatCompteActive').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var edit_id = button.data('edit_id')
+			
+			var modal = $(this)
+			modal.find('.modal-body #edit_id').val(edit_id);
+			
+		})
+		
+		$('#EtatCompteDesactiver').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var edit_id = button.data('edit_id')
+			
+			var modal = $(this)
+			modal.find('.modal-body #edit_id').val(edit_id);
+			
+		})
+
+		$('#deletemodel').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var delete_id = button.data('delete_id')
+
+			var modal = $(this)
+			modal.find('.modal-body #delete_id').val(delete_id);
+
+		})
+	</script>
+
+
+</body>
+</html>

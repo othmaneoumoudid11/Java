@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css" th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Entreprise"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text = ${entreprise.getNom_entr()}>
+				<p class="app-sidebar__user-designation">Entreprise</p>
+			</div>
+		</div>
+	<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Entreprise"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste_Offre"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Créer Offre</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Compte_Interne"><i
+					class="app-menu__icon fa fa-user"></i>
+					<span class="app-menu__label">Liste Compte interne</span></a></li>	
+					<li><a class="app-menu__item" href="/Liste_Stagiaire"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Stagiaire</span></a></li>
+					
+				<li><a class="app-menu__item" href="/Liste_Entretien_Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entretien</span></a></li>
+	</ul>
+	</aside>
+	<main class="app-content">
+		<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header" style="margin: 12px 0 20px;">
+				<i class="fa fa-line-chart" aria-hidden="true"></i> Statistique
+			</h3>
+			<nav aria-label="breadcrumb" style="background-color: white;">
+				<ol class="breadcrumb">
+					
+					<li class="breadcrumb-item active" aria-current="page">
+					<a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Statistique</a></li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small primary coloured-icon">
+					<i class="icon fa fa-medkit fa-3x"></i>
+					<div class="info">
+						<h4>Nbre Offres</h4>
+						<p>
+							<b th:text = ${nbr_offres} ></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small info coloured-icon">
+					<i class="icon fa fa-user fa-3x"></i>
+					<div class="info">
+						<h4>Nbre Comptes</h4>
+						<p>
+							<b th:text = ${nbr_intern_compte} ></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small warning coloured-icon">
+					<i class="icon fa fa-files-o fa-3x"></i>
+					<div class="info">
+						<h4>Nbre Entretiens</h4>
+						<p>
+							<b th:text = ${nbr_entretien} ></b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small danger coloured-icon">
+					<i class="icon fa fa-files-o  fa-3x"></i>
+					<div class="info">
+						<h4>Nbre Stagaiares</h4>
+						<p>
+							<b th:text = ${nbr_stagaires} ></b>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<h3 class="tile-title">Statistique mensuelle</h3>
+					<div class="embed-responsive ">
+						<div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</main>
+		 <script  type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	   <script  th:inline="javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mois', 'Nombre Offres', 'Nombre Entretiens'],
+          ['Jan',/*[[${jan_off}]]*/,/*[[${jan_ent}]]*/],
+          ['Feb',/*[[${feb_off}]]*/,/*[[${feb_ent}]]*/],
+          ['Mar',/*[[${mar_off}]]*/,/*[[${mar_ent}]]*/],
+          ['Avr',/*[[${avr_off}]]*/,/*[[${avr_ent}]]*/],
+          ['Mai',/*[[${mai_off}]]*/,/*[[${mai_ent}]]*/],
+          ['Juin',/*[[${jui_off}]]*/,/*[[${jui_ent}]]*/],
+          ['Juil',/*[[${juil_off}]]*/,/*[[${juil_ent}]]*/],
+          ['Aout',/*[[${aou_off}]]*/,/*[[${aou_ent}]]*/],
+          ['Sept',/*[[${sep_off}]]*/,/*[[${sep_ent}]]*/],
+          ['Oct',/*[[${oct_off}]]*/,/*[[${oct_ent}]]*/],
+          ['Nov',/*[[${nov_off}]]*/,/*[[${nov_ent}]]*/],
+          ['Dec',/*[[${dec_off}]]*/,/*[[${dec_ent}]]*/]
+        ]);
+
+ 
+
+        var options = {
+          chart: {
+            title: 'Offres-Entretiens',
+            subtitle: "Offres et Entretiens par Mois: 2021" ,
+            Style:"#ffffff",
+          },
+        colors: ['#007d71', '#ffc107'],
+        };
+
+ 
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+	<!-- Essential javascripts for application to work-->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="/js/main.js"></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="js/plugins/pace.min.js"></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="../static/js/plugins/chart.js"></script>
+
+</body>
+</html>

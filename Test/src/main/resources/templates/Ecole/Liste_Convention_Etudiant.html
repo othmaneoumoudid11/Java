@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css"
+	th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	th:href=@{https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+</head>
+
+
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a><a
+			class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+			aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Ecole"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text="${ecole.getNom_ecole()}"/>
+				<p class="app-sidebar__user-designation">Ecole</p>
+			</div>
+		</div>
+			<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Ecole"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+			<li class="treeview"><a class="app-menu__item" href="Reservation_Client" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Etudiant</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="/Liste-Etudiant"><i class="icon fa fa-circle-o"></i>Lister</a></li>
+            <li><a class="treeview-item" href="/Liste-Etudiant-Sans-Stage"  rel="noopener"><i class="icon fa fa-circle-o"></i>Non stagiaire</a></li>
+            <li><a class="treeview-item" href="/Compte_Etudiant"><i class="icon fa fa-circle-o"></i>Créer Compte</a></li>
+          </ul>
+        </li>
+			<li><a class="app-menu__item" href="/Liste_Convention_Etudiant"><i
+					class="app-menu__icon fa fa-pencil-square-o"></i><span class="app-menu__label">Demande Convention</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entreprise</span></a></li>
+					
+						<li><a class="app-menu__item" href="/Liste-Filiere"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Filière</span></a></li>
+		</ul>
+	</aside>
+	<main class="app-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-list" aria-hidden="true"></i> Liste des demandes de convention
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/Acceuil_Ecole"><i class=" fa fa-line-chart"></i>  Statistique</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa-list" aria-hidden="true"></i> Liste des demandes </li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		
+		<div class="row">
+			<br>
+			<div class="col-md-12">
+				<div class="tile">
+					</br>
+					<div class="tile-body">
+						<div class="table-responsive">
+
+							<table class="table table-hover table-bordered" id="sampleTable">
+								<thead>
+									<tr>
+										<th>Nom</th>
+										<th>Prénom</th>
+										<th>Entreprise</th>
+										<th>Sujet Stage</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr th:each="C:${conventions}">
+
+										<td th:text="${C.getEtudiant().getNom_etd()}"/>
+										<td th:text="${C.getEtudiant().getPrenom_etd()}"/>
+										<td th:text="${C.getOffre().getEntreprise().getNom_entr()}"/>
+										<td th:text="${C.getOffre().getSujet_off()}"/>
+										
+										<td>
+											<li class="list-inline-item">
+												<button class="btn btn-primary" data-toggle="modal"
+													data-target="#acceptemodel"
+													th:data-accepte_id="${C.getId_conv()}"
+													type="button"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-check icon_" aria-hidden="true"></i>Acceptée
+												</button>
+										</li>
+										
+										<li class="list-inline-item">
+												<button class="btn btn-danger" data-toggle="modal"
+													data-target="#refusmodel"
+													th:data-id_conv="${C.getId_conv()}"
+													type="button"
+													style="padding-left: 4px; padding-right: 4px;">
+													<i class="fa fa-times icon_" aria-hidden="true"></i>Refusée
+												</button>
+										</li>
+											
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	
+
+
+	<div class="modal fade" id="refusmodel" tabindex="-1" role="dialog"
+		aria-labelledby="delete" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="/Refuser_Stage" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Refus sujet de stage</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="id_conv" id="id_conv">Voulez-vous
+						refuser cette stage ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Non</button>
+						<button type="submit" class="btn btn-danger">Oui</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+<div class="modal fade" id="acceptemodel" tabindex="-1" role="dialog"
+		aria-labelledby="delete" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="/Accepter_SujetStage" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Accept le stage</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="conv_id" id="conv_id">Voulez-vous
+						accepter ce stage ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Non</button>
+						<button type="submit" class="btn btn-danger">Oui</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	
+
+
+
+	<!-- Essential javascripts for application to work-->
+	<script src="..static/js/jquery-3.3.1.min.js"
+		th:src=@{js/jquery-3.3.1.min.js}></script>
+	<script src="..static/js/popper.min.js" th:src=@{js/popper.min.js}></script>
+	<script src="..static/js/bootstrap.min.js"
+		th:src=@{js/bootstrap.min.js}></script>
+	<script src="..static/js/main.js" th:src=@{js/main.js}></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="..static/js/plugins/pace.min.js"
+		th:src=@{js/plugins/pace.min.js}></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="..static/js/plugins/chart.js"
+		th:src=@{js/plugins/chart.js}></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/French.json"></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/jquery.dataTables.min.js"
+		th:src=@{js/plugins/jquery.dataTables.min.js}></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/dataTables.bootstrap.min.js"
+		th:src=@{js/plugins/dataTables.bootstrap.min.js}></script>
+
+	<script type="text/javascript">
+		$('#sampleTable')
+				.DataTable(
+						{
+							"language" : {
+								"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+							},
+							columnDefs : [ {
+								targets : [ 2 ],
+								orderable : false
+							}, ]
+
+						});
+
+		
+
+		$('#refusmodel').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var id_conv = button.data('id_conv')
+
+			var modal = $(this)
+			modal.find('.modal-body #id_conv').val(id_conv);
+
+		})
+		
+		
+		
+		$('#acceptemodel').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			var accepte_id = button.data('accepte_id')
+
+			var modal = $(this)
+			modal.find('.modal-body #conv_id').val(accepte_id);
+
+		})
+		
+		
+	</script>
+
+
+</body>
+</html>

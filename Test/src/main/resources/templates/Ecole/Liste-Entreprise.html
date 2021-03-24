@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css"
+	th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	th:href=@{https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	th:href=@{https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+
+</head>
+
+
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a><a
+			class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+			aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Ecole"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text="${ecole.getNom_ecole()}"/>
+				<p class="app-sidebar__user-designation">Ecole</p>
+			</div>
+		</div>
+			<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Ecole"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+		<li class="treeview"><a class="app-menu__item" href="Reservation_Client" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Etudiant</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="/Liste-Etudiant"><i class="icon fa fa-circle-o"></i>Lister</a></li>
+            <li><a class="treeview-item" href="/Liste-Etudiant-Sans-Stage"  rel="noopener"><i class="icon fa fa-circle-o"></i>Non stagiaire</a></li>
+            <li><a class="treeview-item" href="/Compte_Etudiant"><i class="icon fa fa-circle-o"></i>Créer Compte</a></li>
+          </ul>
+        </li>
+			<li><a class="app-menu__item" href="/Liste_Convention_Etudiant"><i
+					class="app-menu__icon fa fa-pencil-square-o"></i><span class="app-menu__label">Demande Convention</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entreprise</span></a></li>
+					
+						<li><a class="app-menu__item" href="/Liste-Filiere"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Filière</span></a></li>
+		</ul>
+	</aside>
+
+
+
+	<main class="app-content">
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-list" aria-hidden="true"></i> Liste Entreprise
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/Acceuil_Ecole"><i class=" fa fa-line-chart"></i>  Statistique</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa-list" aria-hidden="true"></i> Liste Entreprise</li>
+
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		<!-- <button type="button" id="new" class="btn btn-primary"
+			data-toggle="modal" data-target="#Add_Doctor"
+			style="margin-bottom: 10px;">
+			Ajouter Etudiant <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+		</button> -->
+
+		<div class="row">
+			<br>
+			<div class="col-md-12">
+				<div class="tile">
+					</br>
+					<div class="tile-body">
+						<div class="table-responsive">
+
+							<table class="table table-hover table-bordered" id="sampleTable">
+								<thead>
+									<tr>
+										<th>Nom</th>
+										<th>Adresse</th>
+										<th>Domaine</th>
+										<th>Téléphone</th>
+										<th>Date d'ouverture</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr th:each="E:${entreprises}">
+										<td th:text="${E.getNom_entr()}" />
+										<td th:text="${E.getAddr_entr()}" />
+										<td th:text="${E.getDom_entr()}" />
+										<td th:text="${E.getTele_fix_entr()}" />
+										<td th:text="${E.getDate_entr()}" />
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<!-- Essential javascripts for application to work-->
+	<script src="..static/js/jquery-3.3.1.min.js"
+		th:src=@{js/jquery-3.3.1.min.js}></script>
+	<script src="..static/js/popper.min.js" th:src=@{js/popper.min.js}></script>
+	<script src="..static/js/bootstrap.min.js"
+		th:src=@{js/bootstrap.min.js}></script>
+	<script src="..static/js/main.js" th:src=@{js/main.js}></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="..static/js/plugins/pace.min.js"
+		th:src=@{js/plugins/pace.min.js}></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="..static/js/plugins/chart.js"
+		th:src=@{js/plugins/chart.js}></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/French.json"></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/jquery.dataTables.min.js"
+		th:src=@{js/plugins/jquery.dataTables.min.js}></script>
+	<script type="text/javascript"
+		src="..static/js/plugins/dataTables.bootstrap.min.js"
+		th:src=@{js/plugins/dataTables.bootstrap.min.js}></script>
+
+
+	<!-- script for pdf imprimer ... -->
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+
+	<script type="text/javascript">
+		$('#sampleTable')
+				.DataTable(
+						{
+							"language" : {
+								"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+							},
+						
+						});
+	</script>
+
+
+</body>
+</html>

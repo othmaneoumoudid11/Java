@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css"
+	th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a> <a
+			class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+			aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Entreprise"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+
+	<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name" th:text = ${entreprise.getNom_entr()}>
+				<p class="app-sidebar__user-designation">Entreprise</p>
+			</div>
+		</div>
+	<ul class="app-menu">
+			<li><a class="app-menu__item " href="/Acceuil_Entreprise"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste_Offre"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Créer Offre</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Compte_Interne"><i
+					class="app-menu__icon fa fa-user"></i>
+					<span class="app-menu__label">Liste Compte interne</span></a></li>	
+					<li><a class="app-menu__item" href="/Liste_Stagiaire"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Stagiaire</span></a></li>
+					
+				<li><a class="app-menu__item" href="/Liste_Entretien_Entreprise"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste Entretien</span></a></li>
+	</ul>
+	</aside>
+	<main class="app-content">
+		<div  class="row" data-spy="affix" data-offset-top="205">
+			<div class="col-lg-12">
+				<h3 class="page-header" style="margin: 12px 0 20px;">
+					<i class="fa fa-medkit" aria-hidden="true"></i> Liste offres
+				</h3>
+				<nav aria-label="breadcrumb" style="background-color: white;">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item " aria-current="page">
+							<a href="Acceuil_Entreprise">
+							<i class="fa fa-line-chart" aria-hidden="true"></i> Statistique
+							</a>
+						</li>
+							<li class="breadcrumb-item active" aria-current="page"><i
+							class="fa fa fa-medkit" aria-hidden="true"></i> Liste offres</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<div class="row user">
+
+
+
+			<div class="col-lg-12"
+				style="padding-right: 26px; padding-left: 29px;">
+				<section class="panel">
+					<header class="panel-heading" style="background-color: #007d71;">
+						<div class="app-header__logo">Offres de stage</div>
+					</header>
+				</section>
+			</div>
+
+
+			
+
+
+			<div class="col-md-3">
+				<div class="tile p-0" >
+					<ul class="nav flex-column nav-tabs user-tabs" >
+						<li class="nav-item"><a class="nav-link active"
+							href="#user-timeline" data-toggle="tab">Consulter Offres</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="#user-settings" data-toggle="tab">Créer Offre</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="tab-content">
+					<div class="tab-pane active" id="user-timeline">
+
+						<div class="timeline-post" th:each="O:${offres}" style="background-color: aliceblue;">
+							<form action="/Liste_Etudiant_Postuler_Offre" method="GET">
+								<div class="post-media">
+									<a href="#">
+										<img th:src="@{/images/Logo-Stage2.jpg}" style="width: 80px;"/></a>
+									<div class="content">
+
+										<h5>
+											<a href="#"><label th:text="${entreprise.getNom_entr()}"></label></a>
+										</h5>
+										<p class="text-muted">
+											<small th:text="${O.getDat_off()}"></small>
+										</p>
+									</div>
+								</div>
+								<div class="post-content">
+									<input type="hidden" name="id_off" th:value="${O.getId_off()}" />
+									<b>Sujet :</b> <label th:text="${O.getSujet_off()}"></label> <br />
+									<b>Durée :</b> <label th:text="${O.getDur_off()}"></label> <br />
+									<b>Compétences :</b> <label th:text="${O.getComp_off()}"></label>
+									<br /> <b>Description :</b>
+									
+										<label th:text="${O.getDesc_off()}"></label>
+									
+								</div>
+
+								<ul class="post-utility">
+									<li class="comments">
+										<button class="btn btn-primary" type="submit" >
+											<i class="fa fa-fw fa-lg fa-check-circle"></i>Liste Etudiants
+										</button>
+									</li>
+								</ul>
+							</form>
+						</div>
+
+					</div>
+					<div class="tab-pane fade" id="user-settings" >
+						<div class="tile user-settings" style="background-color: aliceblue;">
+							<h4 class="line-head">Créer Offre</h4>
+
+							<form action="/CreerOffre" method="POST">
+								<div class="form-group row">
+									<label class="control-label col-lg-2">Domaine :</label>
+									<div class="col-md-10">
+										<input class="form-control" value="" type="text"
+											name="domaine">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-lg-2">Sujet :</label>
+									<div class="col-md-10">
+										<input class="form-control" type="text" value="" name="sujet">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-lg-2">Durée:</label>
+									<div class="col-md-10">
+										<input class="form-control" type="text" name="duree"
+											placeholder="durée" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-lg-2">Compétences :</label>
+									<div class="col-md-10">
+										<textarea class="form-control" name="competences" rows="5"
+											placeholder="Compétences" required></textarea>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-lg-2">Description:</label>
+									<div class="col-md-10">
+										<textarea class="form-control" name="description" rows="5"
+											placeholder="Description" required></textarea>
+									</div>
+								</div>
+								<hr>
+								<div class="row mb-10">
+									<div class="col-md-12">
+										<button class="btn btn-primary" type="submit" >
+											<i class="fa fa-fw fa-lg fa-check-circle"></i> Enregistrer
+										</button>
+
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Essential javascripts for application to work-->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="/js/main.js"></script>
+	<!-- The javascript plugin to display page loading on top-->
+	<script src="js/plugins/pace.min.js"></script>
+	<!-- Page specific javascripts-->
+	<script type="text/javascript" src="../static/js/plugins/chart.js"></script>
+
+</body>
+</html>

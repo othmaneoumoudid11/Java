@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<title>Gestion-Stagiaire</title>
+<meta charset="utf-8">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="..static/css/main.css" th:href=@{/css/main.css}>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="app sidebar-mini">
+	<!-- Navbar-->
+	<header class="app-header">
+		<a class="app-header__logo" href="index.html">Gestion-Stagiaire</a>
+		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+		<ul class="app-nav">
+			</li>
+			<!-- User Menu-->
+			<li class="dropdown">
+			<li><a class="dropdown-item" href="Logout_Etudiant"
+				style="border-top-width: 13px; padding-top: 14px; padding-bottom: 14px;"><i
+					class="fa fa-sign-out fa-lg"></i>Se déconnecter</a></li>
+			</li>
+		</ul>
+	</header>
+	<!-- Sidebar menu-->
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	
+		<aside class="app-sidebar">
+		<div class="app-sidebar__user">
+			<img class="app-sidebar__user-avatar" src="..static/images/user.jpg"
+				th:src=@{images/user.jpg} 
+				alt="User Image">
+			<div>
+				<p class="app-sidebar__user-name"  th:text="${Etudiant.getNom_etd()} +' '+ ${Etudiant.getPrenom_etd()}"/>
+				<p class="app-sidebar__user-designation">Etudiant</p>
+			</div>
+		</div>
+		<ul class="app-menu">
+			<li><a class="app-menu__item " href="Acceuil_Etudiant"><i
+					class="app-menu__icon fa fa-line-chart"></i><span
+					class="app-menu__label">Statistique</span></a></li>
+
+			<li><a class="app-menu__item" href="/Liste-OffresEtudiant"><i
+					class="app-menu__icon fa fa-medkit"></i><span
+					class="app-menu__label">Liste Offres</span></a></li>
+			<li><a class="app-menu__item" href="/Curriculum_vitae"><i
+					class="app-menu__icon fa fa-file-text"></i><span
+					class="app-menu__label">Curriculum vitae</span></a></li>
+			<li><a class="app-menu__item" href="/Liste_Offre_Convention"><i
+					class="app-menu__icon fa fa-pencil-square-o"></i><span class="app-menu__label">Demande de convention</span></a></li>
+			<li><a class="app-menu__item" href="/Liste-Stage-Etudiant"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste de stages</span></a>
+					</li>
+			<li><a class="app-menu__item" href="/Liste_Entretien"><i
+					class="app-menu__icon fa fa-bell"></i><span
+					class="app-menu__label">Appel Entretiens</span></a>
+					</li>
+					
+					<li><a class="app-menu__item" href="/Liste_Convention_Accepter"><i
+					class="app-menu__icon fa fa-list"></i><span
+					class="app-menu__label">Liste conventiens</span></a>
+					</li>
+		 </ul>
+	</aside>
+   <main class="app-content">
+      <div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header" style="margin: 12px 0 20px;">
+				<i class="fa fa-file-text" aria-hidden="true"></i> Curriculum vitae
+			</h3>
+			<nav aria-label="breadcrumb" style="background-color: white;">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/Acceuil_Etudiant"><i class="fa fa-line-chart"></i>  Statistique</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><i
+						class="fa fa-file-text" aria-hidden="true"></i> Curriculum vitae</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+      <div class="row">
+        <div class="col-md-3"><a class="mb-2 btn btn-primary btn-block" href="">Curriculum vitae</a>
+          <div class="tile p-0">
+            <h4 class="tile-title folder-head">CV</h4>
+            <div class="tile-body">
+              <ul class="nav nav-pills flex-column mail-nav">
+                <li class="nav-item"><a class="nav-link" href="/Curriculum_vitae"><i class="fa fa-info-circle" aria-hidden="true"></i> Info</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/List_Formation"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Formations</a></li>
+                <li class="nav-item"><a class="nav-link" href="/List_Experience"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Expériences</a></li>
+                <li class="nav-item"><a class="nav-link" href="/List_Projet"><i class="fa fa-code" aria-hidden="true"></i> Projet réalisé</a></li>
+                 <li class="nav-item"><a class="nav-link" href="/List_Langue"><i class="fa fa-language" aria-hidden="true"></i> Langues</a></li>
+                <li class="nav-item"><a class="nav-link" href="/List_Hobbie"><i class="fa fa-list-ol" aria-hidden="true"></i> Loisirs</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+        <button type="button" id="new" class="btn btn-primary"
+			data-toggle="modal" data-target="#Add_Doctor"
+			style="margin-bottom: 10px;">
+			Ajouter un Loisir <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+		</button>
+          <div class="tile">
+            <div class="mailbox-controls">
+             <h1>Loisirs</h1>
+            </div>
+           
+           
+           <div class="table-responsive mailbox-messages">
+						<table class="table">
+							<tbody >
+								<tr>
+									<td>
+									<ul>
+										<div th:each="H:${hobbies}">
+										
+											 <li th:text="${H.getHobbie()}"></li> <br />  
+										
+										</div>
+										</ul>
+									</td>
+							  </tr>
+							 
+							</tbody>
+						</table>
+					</div>
+           
+           
+          </div>
+        </div>
+        </div>
+        
+        
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+		tabindex="-1" id="Add_Doctor" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ajouter un
+						Loisir</h5>
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+				</div>
+
+				<div class="modal-body">
+					<form role="form" action="/Ajouter_Loisir" method="POST" name="myForm">
+						<div class="form-group">
+							<label>Loisir</label> <input type="text" class="form-control"
+								name="loisir" placeholder="loisir" required />
+						</div>
+						
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-secondary"
+								data-dismiss="modal">Annuler</button>
+							<button type="submit" class="btn btn-success ">Enregistrer</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+        
+        
+        
+        
+        
+        
+        
+    </main>
+    <!-- Essential javascripts for application to work-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <!-- Google analytics script-->
+   
+  </body>
+</html>
+
+
+
+
+
+
+ 
